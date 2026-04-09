@@ -19,7 +19,7 @@ namespace LoanManagementSys
         private List<Product> products = new();
 
         //Products receive an Id starting from 100 and then
-        //everyting a new product is created, the id is
+        //everytime a new product is created, the id is
         //incremented.
         private int lastProductID = 100;
 
