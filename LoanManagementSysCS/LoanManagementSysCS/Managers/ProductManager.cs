@@ -18,7 +18,7 @@ namespace LoanManagementSys
     {
         private List<Product> products = new();
 
-        //Products receive an Id sarting from 100 and then
+        //Products receive an Id starting from 100 and then
         //everyting a new product is created, the id is
         //incremented.
         private int lastProductID = 100;
@@ -60,7 +60,7 @@ namespace LoanManagementSys
             get { return products.Count; }
         }
         /// <summary>
-        /// Validet the given index so it is not out of range.
+        /// Validate the given index so it is not out of range.
         /// </summary>
         /// <param name="index">Index to be validated.</param>
         /// <returns></returns>
@@ -70,7 +70,7 @@ namespace LoanManagementSys
         }
 
 
-        //Preapare and rturn a string array where each element contains
+        //Preapare and return a string array where each element contains
         //information about the loanObject, calling the object's
         //toString metod.  The return array can then be used to update
         //the GUI on the related view.

@@ -37,7 +37,7 @@ public class LoanItem
         set { member = value; }
     }
 
-    //The toString method retuning a textual representation of the
+    //The toString method returning a textual representation of the
     //object's values.
     public override String ToString()
     {
