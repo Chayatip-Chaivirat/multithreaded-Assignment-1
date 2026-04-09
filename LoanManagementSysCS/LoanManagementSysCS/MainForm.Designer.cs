@@ -42,7 +42,7 @@
             btnOK.TabIndex = 0;
             btnOK.Text = "Start";
             btnOK.UseVisualStyleBackColor = true;
-            btnOK.Click += btnOK_Click;
+            btnOK.Click += BtnOK_Click;
             // 
             // lstOutput
             // 
@@ -64,7 +64,7 @@
             btnStop.TabIndex = 3;
             btnStop.Text = "Stop";
             btnStop.UseVisualStyleBackColor = true;
-            btnStop.Click += btnStop_Click;
+            btnStop.Click += BtnStop_Click;
             // 
             // lstItems
             // 

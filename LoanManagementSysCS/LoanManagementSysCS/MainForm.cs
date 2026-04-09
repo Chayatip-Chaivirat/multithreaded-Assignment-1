@@ -10,7 +10,7 @@ public partial class MainForm : Form
         //loanSystem = new LoanSysManager(lstOutput, lstItems);
     }
 
-    private void btnOK_Click(object sender, EventArgs e)
+    private void BtnOK_Click(object sender, EventArgs e)
     {
         //loanSystem.Start();
 
@@ -44,7 +44,7 @@ public partial class MainForm : Form
     }
 
 
-    private void btnStop_Click(object sender, EventArgs e)
+    private void BtnStop_Click(object sender, EventArgs e)
     {
         //loanSystem.Stop();
    }
