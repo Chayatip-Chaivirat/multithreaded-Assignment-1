@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LoanManagementSys.Managers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,12 +20,12 @@ internal class UpdateGUI
 {
     private Random random;
     private bool isRunning = true; //to start and stop the thread
-    //private LoanSysManager loanSys;
+    private LoanSystemManager loanSys;
 
     //constructor
-    public UpdateGUI(/*LoanSysManager loanSys*/)
+    public UpdateGUI(LoanSystemManager loanSys)
     {
-       // this.loanSys = loanSys;
+        this.loanSys = loanSys;
         random = new Random();
     }
 
@@ -44,7 +45,7 @@ internal class UpdateGUI
 
                 // Update any UI  - UpdateLoanIemList
                 
-                //loanSys.UpdateAllItems();  
+                loanSys.UpdateGUI();  
                 Thread.Sleep(2000); // Simulate some operation
             }
         }

@@ -1,18 +1,20 @@
+using LoanManagementSys.Managers;
+using System.Threading.Tasks;
 namespace LoanManagementSys;
 
 public partial class MainForm : Form
 {
-    //private LoanSysManager loanSystem;
+    private LoanSystemManager loanSystem;
 
     public MainForm()
     {
         InitializeComponent();
-        //loanSystem = new LoanSysManager(lstOutput, lstItems);
+        loanSystem = new LoanSystemManager(this);
     }
 
-    private void BtnOK_Click(object sender, EventArgs e)
+    public void BtnOK_Click(object sender, EventArgs e)
     {
-        //loanSystem.Start();
+        loanSystem.Start();
 
         //This code is only an example of how 
         //you can update the list boxes or other 
@@ -20,19 +22,19 @@ public partial class MainForm : Form
         //in UpdateProducts in the class where you create your 
         //tasks and threads to update the listboxes on the 
         //MainForm.
-        string[] items = { "Product 1", "Product 2", "Product 3" };
+        //string[] items = { "Product 1", "Product 2", "Product 3" };
 
-        for (int i = 0; i < items.Length; i++)
-        {
-            UpdateProducts(items[i], i);
-        }
+        //for (int i = 0; i < items.Length; i++)
+        //{
+        //    UpdateProducts(items[i], i);
+        //}
         
     }
-    private void UpdateProducts(string item, int i)
+    public void UpdateProducts(string item, int i)
     {
         if (lstItems.InvokeRequired)
         {
-            lstItems.Invoke(new Action<string, int>(UpdateProducts), item);
+            lstItems.Invoke(new Action<string, int>(UpdateProducts), item, i);
         }
         else
         {
@@ -43,14 +45,29 @@ public partial class MainForm : Form
         }
     }
 
-
-    private void BtnStop_Click(object sender, EventArgs e)
+    public void UpdateLoans(string item, int i)
     {
-        //loanSystem.Stop();
+        if (lstOutput.InvokeRequired)
+        {
+            lstOutput.Invoke(new Action<string, int>(UpdateLoans), item, i);
+
+        }
+        else
+        {
+            if (i == 0)
+                lstOutput.Items.Clear();
+            lstOutput.Items.Add(item);
+        }
+    }
+
+
+    public void BtnStop_Click(object sender, EventArgs e)
+    {
+        loanSystem.Stop();
    }
 
 
-    private void UpdateProductListBox(string item, int i)
+    public void UpdateProductListBox(string item, int i)
     {
         // Check if we need to call Invoke to marshal the call to the UI thread
         if (lstItems.InvokeRequired)
@@ -66,11 +83,11 @@ public partial class MainForm : Form
         }
     }
 
-    private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+    public void MainForm_FormClosing(object sender, FormClosingEventArgs e)
     {
-        // loanThread = null;
+        //loanThread = null;
         // returnThread = null;
-        //loanSystem.Stop();
+        loanSystem.Stop();
         Application.Exit();
     }
 }
