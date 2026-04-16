@@ -174,20 +174,12 @@ namespace LoanManagementSys.Managers
                         for (int j = 0; j < returnedProducts.Length; j++) // Add return info to event log
                         {
                             eventLog.Add(returnedProducts[j]);
-                        }
-                        for (int k = 0; k < addedProducts.Length; k++) // Add added new products info to event log
-                        {
-                            eventLog.Add(addedProducts[k]);
+                            for (int k = 0; k < addedProducts.Length; k++) // Add added new products info to event log
+                            {
+                                eventLog.Add(addedProducts[k]);
+                            }
                         }
                     }
-                    //for (int j = 0; j < returnedProducts.Length; j++) // Add return info to event log
-                    //{
-                    //    eventLog.Add(returnedProducts[j]);
-                    //}
-                    //for (int k = 0; k < addedProducts.Length; k++) // Add added new products info to event log
-                    //{
-                    //    eventLog.Add(addedProducts[k]);
-                    //}
 
                     for (int i = 0; i < eventLog.Count; i++) // Update the loans list box with the event log info
                     {
@@ -195,10 +187,23 @@ namespace LoanManagementSys.Managers
                     }
 
                     string[] products = productManager.GetProductInfoStrings();
+                    string[] loanedItems = loanItemManager.GetLoanInfo();
+                    List<string> productLog = new List<string>();
+
                     for (int i = 0; i < products.Length; i++)
                     {
-                        form.UpdateProducts(products[i], i);
+                        productLog.Add(products[i]);
                     }
+                    for (int j = 0; j < loanedItems.Length; j++)
+                    {
+                        productLog.Add(loanedItems[j]);
+                    }
+
+                    for (int i = 0; i < productLog.Count; i++) // Update the products list box with the product log info
+                    {
+                        form.UpdateProducts(productLog[i], i);
+                    }
+                    
                 }
 
                 Thread.Sleep(random.Next(1000, 2000));

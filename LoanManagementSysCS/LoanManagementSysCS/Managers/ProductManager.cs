@@ -16,7 +16,7 @@ namespace LoanManagementSys
     /// </summary>
     internal class ProductManager
     {
-        private List<Product> products = new();
+        public List<Product> products = new();
         public List<LoanItem> retuns = new();
         public List<Product> allProductAdded = new(); 
 

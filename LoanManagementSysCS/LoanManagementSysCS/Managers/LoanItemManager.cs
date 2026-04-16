@@ -6,7 +6,9 @@ namespace LoanManagementSys.Managers
     internal class LoanItemManager
     {
         private List<LoanItem> loanItems = new List<LoanItem>();
-        ProductManager productManager = new ProductManager();
+        // Keep track of returned loan items locally so returned items can be
+        // removed from the active loanItems list and reported to the GUI.
+        private List<LoanItem> returns = new List<LoanItem>();
 
         public void Add(LoanItem loanItem)
         {
@@ -17,8 +19,10 @@ namespace LoanManagementSys.Managers
         {
             if (CheckIndex(index))
             {
-                productManager.retuns.Add(loanItems[index]);
-                //loanItems.RemoveAt(index);
+                // Move the loan item to the returns list and remove it from
+                // the active loan items so it is no longer shown as loaned.
+                returns.Add(loanItems[index]);
+                loanItems.RemoveAt(index);
             }
         }
 
@@ -44,7 +48,7 @@ namespace LoanManagementSys.Managers
         {
             return loanItems.Count == 0;
         }
-            
+
         public string[] GetLoanInfoStrings()
         {
             string[] infoString = new string[loanItems.Count];
@@ -53,17 +57,26 @@ namespace LoanManagementSys.Managers
             {
                 infoString[i] = loanItems[i].ToString();
             }
+            return infoString;
+        }
 
-            infoString[infoString.Length - 1] = " ";
+        public string[] GetLoanInfo()
+        {
+            string[] infoString = new string[loanItems.Count];
+            for (int i = 0; i < loanItems.Count; i++)
+            {
+               string loanInfo = $"Loaned item: {loanItems[i].Product.Name}";
+               infoString[i] = loanInfo;
+            }
             return infoString;
         }
         public string[] GetReturnInfoStrings()
         {
-            string[] infoString = new string[productManager.retuns.Count];
+            string[] infoString = new string[returns.Count];
 
-            for (int i = 0; i < productManager.retuns.Count; i++)
+            for (int i = 0; i < returns.Count; i++)
             {
-                infoString[i] = productManager.retuns[i].ReturnString();
+                infoString[i] = returns[i].ReturnString();
             }
 
             return infoString;
