@@ -43,15 +43,21 @@ namespace LoanManagementSys.Managers
 
         public string[] GetLoanInfoStrings()
         {
-            if (loanItems.Count == 0)
-                return new string[] { "No active loans" };
+            if (loanItems == null || loanItems.Count <= 0)
+                return new string[] {"Active loans: 0", " "};
 
-            string[] arr = new string[loanItems.Count];
+            string[] infoString = new string[loanItems.Count + 3];
+            infoString[0] = $"Active loans: {loanItems.Count}";
+            infoString[1] = " ";
+            int j = 2;
 
             for (int i = 0; i < loanItems.Count; i++)
-                arr[i] = loanItems[i].ToString();
+            {
+                infoString[j++] = loanItems[i].ToString();
+            }
 
-            return arr;
+            infoString[infoString.Length - 1] = " ";
+            return infoString;
         }
     }
 }
