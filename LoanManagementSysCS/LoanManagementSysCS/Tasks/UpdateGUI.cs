@@ -51,7 +51,7 @@ internal class UpdateGUI
         }
         catch (Exception ex)
         {
-            //loanSys.UpdateEventLogListBox(ex.Message);
+            loanSys.UpdateEventLogListBox(ex);
         }
     }
 

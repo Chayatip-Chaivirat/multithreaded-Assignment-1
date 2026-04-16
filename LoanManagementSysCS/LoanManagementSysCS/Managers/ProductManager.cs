@@ -17,6 +17,8 @@ namespace LoanManagementSys
     internal class ProductManager
     {
         private List<Product> products = new();
+        public List<LoanItem> retuns = new();
+        public List<Product> allProductAdded = new(); 
 
         //Products receive an Id starting from 100 and then
         //everytime a new product is created, the id is
@@ -48,9 +50,15 @@ namespace LoanManagementSys
         /// the list
         /// </summary>
         /// <param name="index">Position of the elment in the list.</param>
-        public void Remove(int index)
+        public void Remove(int index, List<LoanItem> returnItems)
         {
-            products.RemoveAt(index);
+            // Remove the product at the given index when it is loaned out.
+            // The returnItems parameter is not needed here but kept to match
+            // existing callers in the codebase.
+            if (CheckIndex(index))
+            {
+                products.RemoveAt(index);   
+            }
         }
         /// <summary>
         /// Return the number of elements in the list
@@ -93,6 +101,14 @@ namespace LoanManagementSys
                 infoStrings[j++] = products[i].ToString();
 
             infoStrings[infoStrings.Length - 1] = "";  //(3)
+            return infoStrings;
+        }
+
+        public String[] GetAddedProductInfoStrings()
+        {
+            String[] infoStrings = new string[allProductAdded.Count];
+            for (int i = 0; i < allProductAdded.Count(); i++)
+                infoStrings[i] = allProductAdded[i].AddedToString();
             return infoStrings;
         }
 

@@ -6,6 +6,7 @@ namespace LoanManagementSys.Managers
     internal class LoanItemManager
     {
         private List<LoanItem> loanItems = new List<LoanItem>();
+        ProductManager productManager = new ProductManager();
 
         public void Add(LoanItem loanItem)
         {
@@ -15,7 +16,10 @@ namespace LoanManagementSys.Managers
         public void Remove(int index)
         {
             if (CheckIndex(index))
-                loanItems.RemoveAt(index);
+            {
+                productManager.retuns.Add(loanItems[index]);
+                //loanItems.RemoveAt(index);
+            }
         }
 
         public LoanItem Get(int index)
@@ -40,23 +44,28 @@ namespace LoanManagementSys.Managers
         {
             return loanItems.Count == 0;
         }
-
+            
         public string[] GetLoanInfoStrings()
         {
-            if (loanItems == null || loanItems.Count <= 0)
-                return new string[] {"Active loans: 0", " "};
-
-            string[] infoString = new string[loanItems.Count + 3];
-            infoString[0] = $"Active loans: {loanItems.Count}";
-            infoString[1] = " ";
-            int j = 2;
+            string[] infoString = new string[loanItems.Count];
 
             for (int i = 0; i < loanItems.Count; i++)
             {
-                infoString[j++] = loanItems[i].ToString();
+                infoString[i] = loanItems[i].ToString();
             }
 
             infoString[infoString.Length - 1] = " ";
+            return infoString;
+        }
+        public string[] GetReturnInfoStrings()
+        {
+            string[] infoString = new string[productManager.retuns.Count];
+
+            for (int i = 0; i < productManager.retuns.Count; i++)
+            {
+                infoString[i] = productManager.retuns[i].ReturnString();
+            }
+
             return infoString;
         }
     }

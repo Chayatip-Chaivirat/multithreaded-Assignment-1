@@ -73,6 +73,10 @@ namespace LoanManagementSys.Managers
         public void Stop()
         {
             isRunning = false;
+            loanThread = null;
+            returnThread = null;
+            adminThread = null;
+            updateGUIThread = null;
         }
 
         //==========
@@ -96,7 +100,7 @@ namespace LoanManagementSys.Managers
 
                         if (product != null && member != null)
                         {
-                            productManager.Remove(productIndex);
+                            productManager.Remove(productIndex, productManager.retuns);
                             loanItemManager.Add(new LoanItem(product, member));
                         }
                     }
@@ -138,10 +142,15 @@ namespace LoanManagementSys.Managers
                 lock (dataLock)
                 {
                     productManager.AddNewTestProduct();
+                    productManager.allProductAdded.Add(productManager.Get(productManager.Count - 1)); // Add the newly added product to the allProductAdded list
                 }
 
                 Thread.Sleep(random.Next(6000, 16000));
             }
+        }
+        public void UpdateEventLogListBox(Exception ex)
+        {
+            ex.Message.ToString();
         }
 
         public void UpdateGUI()
@@ -153,16 +162,42 @@ namespace LoanManagementSys.Managers
 
                 lock (dataLock)
                 {
+                    string[] addedProducts = productManager.GetAddedProductInfoStrings();
+                    string[] loans = loanItemManager.GetLoanInfoStrings();
+                    string[] returnedProducts = loanItemManager.GetReturnInfoStrings();
+
+                    List<string> eventLog = new List<string>();
+
+                    for (int i = 0; i < loans.Length; i++) // Add loan info to event log
+                    {
+                       eventLog.Add(loans[i]);
+                        for (int j = 0; j < returnedProducts.Length; j++) // Add return info to event log
+                        {
+                            eventLog.Add(returnedProducts[j]);
+                        }
+                        for (int k = 0; k < addedProducts.Length; k++) // Add added new products info to event log
+                        {
+                            eventLog.Add(addedProducts[k]);
+                        }
+                    }
+                    //for (int j = 0; j < returnedProducts.Length; j++) // Add return info to event log
+                    //{
+                    //    eventLog.Add(returnedProducts[j]);
+                    //}
+                    //for (int k = 0; k < addedProducts.Length; k++) // Add added new products info to event log
+                    //{
+                    //    eventLog.Add(addedProducts[k]);
+                    //}
+
+                    for (int i = 0; i < eventLog.Count; i++) // Update the loans list box with the event log info
+                    {
+                        form.UpdateLoans(eventLog[i], i);
+                    }
+
                     string[] products = productManager.GetProductInfoStrings();
                     for (int i = 0; i < products.Length; i++)
                     {
                         form.UpdateProducts(products[i], i);
-                    }
-
-                    string[] loans = loanItemManager.GetLoanInfoStrings();
-                    for (int i = 0; i < loans.Length; i++)
-                    {
-                        form.UpdateLoans(loans[i], i);
                     }
                 }
 

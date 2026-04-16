@@ -60,7 +60,6 @@ public partial class MainForm : Form
         }
     }
 
-
     public void BtnStop_Click(object sender, EventArgs e)
     {
         loanSystem.Stop();

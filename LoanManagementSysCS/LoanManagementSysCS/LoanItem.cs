@@ -44,6 +44,12 @@ public class LoanItem
         string? memberStr = (member != null) ? "Loaned to  " + member.ToString() :  string.Empty;
         return $"{product.ToString()} {memberStr}";
     }
+
+    public String ReturnString()
+    {
+        string? memberStr = (member != null) ? "Returned by " + member.ToString() : string.Empty;
+        return $"{product.ToString()} {memberStr}";
+    }
 }
 
 

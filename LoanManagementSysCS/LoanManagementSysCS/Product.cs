@@ -41,4 +41,9 @@ public class Product
     {
         return $"{name,-15} ID: {id}";
     }
+
+    public string AddedToString()
+    {
+        return $"{name,-15} ID: {id} added to the system.";
+    }
 }
