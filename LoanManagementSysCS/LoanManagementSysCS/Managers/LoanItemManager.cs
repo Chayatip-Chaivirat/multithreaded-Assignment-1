@@ -63,11 +63,12 @@ namespace LoanManagementSys.Managers
         public string[] GetLoanInfo()
         {
             string[] infoString = new string[loanItems.Count];
+
             for (int i = 0; i < loanItems.Count; i++)
             {
-               string loanInfo = $"Loaned item: {loanItems[i].Product.Name}";
-               infoString[i] = loanInfo;
+                infoString[i] = loanItems[i].Product.Name;
             }
+
             return infoString;
         }
         public string[] GetReturnInfoStrings()

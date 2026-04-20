@@ -61,7 +61,7 @@ namespace LoanManagementSys.Managers
             returnThread = new Thread(ReturnTask);
             adminThread = new Thread(AdminTask);
             UpdateGUI updateGUI = new UpdateGUI(this);
-            updateGUIThread = new Thread(UpdateGUI);
+            updateGUIThread = new Thread(updateGUI.Run);
 
             // Start threads
             loanThread.Start();
@@ -188,22 +188,37 @@ namespace LoanManagementSys.Managers
 
                     string[] products = productManager.GetProductInfoStrings();
                     string[] loanedItems = loanItemManager.GetLoanInfo();
+
                     List<string> productLog = new List<string>();
 
+                    // Header
+                    productLog.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                    productLog.Add("");
+
+                    // Loaned count
+                    productLog.Add("Products on loan: " + loanedItems.Length);
+                    productLog.Add("");
+
+                    // Loaned items first
+                    for (int i = 0; i < loanedItems.Length; i++)
+                    {
+                        productLog.Add(loanedItems[i]);
+                    }
+
+                    productLog.Add("");
+
+                    // Available products
                     for (int i = 0; i < products.Length; i++)
                     {
                         productLog.Add(products[i]);
                     }
-                    for (int j = 0; j < loanedItems.Length; j++)
-                    {
-                        productLog.Add(loanedItems[j]);
-                    }
 
-                    for (int i = 0; i < productLog.Count; i++) // Update the products list box with the product log info
+                    // Update GUI
+                    for (int i = 0; i < productLog.Count; i++)
                     {
                         form.UpdateProducts(productLog[i], i);
                     }
-                    
+
                 }
 
                 Thread.Sleep(random.Next(1000, 2000));
